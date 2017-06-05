@@ -1,28 +1,42 @@
 {
-    "author": "nobleclem",
-    "name": "jQuery-MultiSelect",
-    "description": "Turn a multiselect list into a nice and easy to use list with checkboxes",
-    "version": "2.3.11",
-    "main": [
-        "jquery.multiselect.js",
-        "jquery.multiselect.css"
-    ],
-    "license": "MIT",
-    "authors": [
-        "nobleclem"
-    ],
-    "moduleType": [],
-    "keywords": [
-        "jquery",
-        "MultiSelect",
-        "CheckBox"
-    ],
-    "homepage": "https://github.com/nobleclem/jQuery-MultiSelect",
-    "ignore": [
-        "*/.",
-        "node_modules",
-        "bower_components",
-        "test",
-        "tests"
-    ]
+  "author": "nobleclem",
+  "name": "jquery-multiselect",
+  "description": "Turn a multiselect list into a nice and easy to use list with checkboxes",
+  "version": "2.3.11",
+  "main": [
+    "jquery.multiselect.js",
+    "jquery.multiselect.css"
+  ],
+  "license": "MIT",
+  "authors": [
+    "nobleclem"
+  ],
+  "moduleType": [],
+  "keywords": [
+    "jquery",
+    "MultiSelect",
+    "CheckBox"
+  ],
+  "homepage": "https://github.com/nobleclem/jQuery-MultiSelect",
+  "ignore": [
+    "*/.",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "serve": "browser-sync start --server '.' --browser 'google chrome' --files \"**/*.*, !node_modules/**/*.html\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zsim0n/jQuery-MultiSelect.git"
+  },
+  "bugs": {
+    "url": "https://github.com/zsim0n/jQuery-MultiSelect/issues"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.18.12"
+  }
 }
