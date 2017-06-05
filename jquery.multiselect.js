@@ -69,6 +69,8 @@
         // @NOTE: these are for future development
         minSelect: false, // minimum number of items that can be selected
         maxSelect: false, // maximum number of items that can be selected
+        // @NOTE option for fall back to single select checkbox / radio
+        mode: 'checkbox'
     };
 
     var msCounter = 1;
@@ -140,6 +142,14 @@
             // check if list is disabled
             if( $(instance.element).prop( 'disabled' ) ) {
                 placeholder.prop( 'disabled', true );
+            }
+// set the 'mode' option to radio or checkbox
+            if( $(instance.element).prop( 'multiple' ) ) {
+                instance.options.mode = 'checkbox';
+            } else {
+                instance.options.mode = 'radio'; 
+                instance.options.selectAll = false;
+                instance.options.selectGroup = false;
             }
 
             // determine maxWidth
@@ -413,29 +423,37 @@
             instance._updateSelectAllText( false );
 
             // BIND SELECT ACTION
-            optionsWrap.on( 'click', 'input[type="checkbox"]', function(){
-                $(this).closest( 'li' ).toggleClass( 'selected' );
-
+            optionsWrap.on( 'click', 'input[type="'+instance.options.mode+'"]', function(event){
+                var optionsList = $(instance.element).next('.ms-options-wrap').find('> .ms-options > ul');
                 var select = optionsWrap.parent().prev();
+                if (instance.options.mode == 'radio') {
+                    optionsList.find('li').removeClass('selected');
+                    optionsList.find('li input[type="'+instance.options.mode+'"]').prop( 'checked', false );
+                    $(this).closest( 'li' ).addClass( 'selected' );
+                    $(this).prop('checked',true); 
+                    select.find('option[value="'+ $(this).val() +'"]').prop(
+                        'selected', $(this).is(':checked')
+                    ).closest('select').trigger('change');                    
+                } else {
+                    $(this).closest( 'li' ).toggleClass( 'selected' );
+                    // toggle clicked option
+                    select.find('option[value="'+ $(this).val() +'"]').prop(
+                        'selected', $(this).is(':checked')
+                    ).closest('select').trigger('change');
 
-                // toggle clicked option
-                select.find('option[value="'+ $(this).val() +'"]').prop(
-                    'selected', $(this).is(':checked')
-                ).closest('select').trigger('change');
-
-                // USER CALLBACK
-                if( typeof instance.options.onOptionClick == 'function' ) {
-                    instance.options.onOptionClick(instance.element, this);
+                    // USER CALLBACK
+                    if( typeof instance.options.onOptionClick == 'function' ) {
+                        instance.options.onOptionClick(instance.element, this);
+                    }
                 }
-
                 instance._updateSelectAllText();
                 instance._updatePlaceholderText();
             });
 
             // BIND FOCUS EVENT
-            optionsWrap.on('focusin', 'input[type="checkbox"]', function(){
+            optionsWrap.on('focusin', 'input[type="'+instance.options.mode+'"]', function(){
                 $(this).closest('label').addClass('focused');
-            }).on('focusout', 'input[type="checkbox"]', function(){
+            }).on('focusout', 'input[type="'+instance.options.mode+'"]', function(){
                 $(this).closest('label').removeClass('focused');
             });
 
@@ -583,7 +601,7 @@
             }
 
             // pad out label for room for the checkbox
-            var chkbx = optionsList.find('.ms-reflow input[type="checkbox"]').eq(0);
+            var chkbx = optionsList.find('.ms-reflow input[type="'+instance.options.mode+'"]').eq(0);
             if( chkbx.length && chkbx.css('display').match(/block$/) ) {
                 var checkboxWidth = chkbx.outerWidth();
                     checkboxWidth = checkboxWidth ? checkboxWidth : 15;
@@ -744,7 +762,10 @@
             var optionsWrap = $(instance.element).next('.ms-options-wrap').find('> .ms-options');
             var select      = optionsWrap.parent().prev();
             var selectVals  = select.val() ? select.val() : [];
-
+// mode = radio fix the .val() returning single value for normal select
+            if (!Array.isArray(selectVals)) {
+                selectVals = [selectVals];
+            }
             // get selected options
             var selOpts = [];
             for( key in selectVals ) {
@@ -756,7 +777,6 @@
                     break;
                 }
             }
-
             // UPDATE PLACEHOLDER TEXT WITH OPTIONS SELECTED
             placeholder.text( selOpts.join( ', ' ) );
 
@@ -774,13 +794,14 @@
 
         // Add option to the custom dom list
         _addOption: function( container, option ) {
+            var instance    = this;
             var thisOption = $('<label/>', {
                 for : 'ms-opt-'+ msCounter,
                 text: option.name
             });
 
             var thisCheckbox = $('<input>', {
-                type : 'checkbox',
+                type : instance.options.mode,
                 title: option.name,
                 id   : 'ms-opt-'+ msCounter,
                 value: option.value
@@ -790,12 +811,13 @@
             if( option.hasOwnProperty('attributes') && Object.keys( option.attributes ).length ) {
                 thisCheckbox.attr( option.attributes );
             }
-
             if( option.checked ) {
                 container.addClass('default selected');
                 thisCheckbox.prop( 'checked', true );
+            } else {
+                thisCheckbox.prop( 'checked', false );
             }
-
+            
             thisOption.prepend( thisCheckbox );
 
             container.attr( 'data-search-term', $.trim( option.name.toLowerCase() ) ).prepend( thisOption );

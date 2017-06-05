@@ -97,6 +97,10 @@
     display: block;
     padding: 5px 0 0 0;
     font-weight: bold;
+    color: #aaa;
+    text-align: left;
+    font-weight: normal;
+    font-size: 100%;
 }
 
 .ms-options-wrap > .ms-options > ul label {
@@ -106,6 +110,7 @@
     padding: 4px;
     margin: 1px 0;
     border: 1px dotted transparent;
+    font-weight: normal;
 }
 
 .ms-options-wrap > .ms-options > ul label.focused,
