@@ -27,7 +27,8 @@
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "serve": "browser-sync start --server '.' --browser 'google chrome' --files \"**/*.*, !node_modules/**/*.html\""
+    "serve": "browser-sync start --server '.' --browser 'google chrome' --files \"**/*.*, !node_modules/**/*.html\"",
+    "deploy": "gh-pages -d . -s \"**/*.+(js|css|html)\""
   },
   "repository": {
     "type": "git",
@@ -37,6 +38,7 @@
     "url": "https://github.com/zsim0n/jQuery-MultiSelect/issues"
   },
   "devDependencies": {
-    "browser-sync": "^2.18.12"
+    "browser-sync": "^2.18.12",
+    "gh-pages": "^1.0.0"
   }
 }
