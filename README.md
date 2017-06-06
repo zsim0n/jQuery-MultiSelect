@@ -1,13 +1,15 @@
 jQuery MultiSelect
 ==================
 
-Turn a multiselect list into a nice and easy to use list with checkboxes.
-
-## Demo
-http://springstubbe.us/projects/demos/jquery-multiselect/
+Improved jQuery MultiSelect that supports single select and multi select w stabil SelectAll feature
+original repo: https://github.com/nobleclem/jQuery-MultiSelect
 
 ## Usage
+The Multiselect detect the 'mode' from the `multiple`attribute.
 ```
+<select> - radio buttons 
+<select multiple="multiple"> - checkboxex
+
 $('select[multiple]').multiselect();
 
 $('select[multiple]').multiselect({
