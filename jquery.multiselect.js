@@ -337,11 +337,13 @@
                         // get unselected vals, marke as selected, return val list
                         optionsList.find('li:not(.optgroup, .selected, .ms-hidden)').addClass('selected');
                         optionsList.find('li.selected input[type="checkbox"]').prop( 'checked', true );
+                        select.find('option').prop('selected',true).trigger('change');
                     }
                     // deselect everything
                     else {
                         optionsList.find('li:not(.optgroup, .ms-hidden).selected').removeClass('selected')
                         optionsList.find('li:not(.optgroup, .ms-hidden, .selected) input[type="checkbox"]').prop( 'checked', false );
+                        select.find('option').prop('selected',false).trigger('change');
                     }
                 }
                 else if( $(this).closest('li').hasClass('optgroup') ) {
@@ -351,14 +353,15 @@
                     if( optgroup.find('li:not(.selected, .ms-hidden)').length ) {
                         optgroup.find('li:not(.selected, .ms-hidden)').addClass('selected');
                         optgroup.find('li.selected input[type="checkbox"]').prop( 'checked', true );
+                        select.find('optgroup[label="'+ $(this).attr('data-label') +'"] option').prop('selected',true).trigger('change');
                     }
                     // deselect everything
                     else {
                         optgroup.find('li:not(.ms-hidden).selected').removeClass('selected');
                         optgroup.find('li:not(.ms-hidden, .selected) input[type="checkbox"]').prop( 'checked', false );
+                        select.find('optgroup[label="'+ $(this).attr('data-label') +'"] option').prop('selected',false).trigger('change');
                     }
                 }
-
                 instance.updateSelectAll   = true;
                 instance.updatePlaceholder = true;
 
@@ -524,7 +527,7 @@
 
                         // add select all link
                         if( instance.options.selectGroup ) {
-                            container.append('<a href="#" class="ms-selectall">' + instance.options.texts.selectAll + '</a>')
+                            container.append('<a href="#" class="ms-selectall" data-label="'+thisOption.label +'">' + instance.options.texts.selectAll + '</a>')
                         }
 
                         container.append('<ul/>');
@@ -762,7 +765,7 @@
             var optionsWrap = $(instance.element).next('.ms-options-wrap').find('> .ms-options');
             var select      = optionsWrap.parent().prev();
             var selectVals  = select.val() ? select.val() : [];
-// mode = radio fix the .val() returning single value for normal select
+// mode = radio fix the .val() returning single value for normal select            
             if (!Array.isArray(selectVals)) {
                 selectVals = [selectVals];
             }
