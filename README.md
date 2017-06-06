@@ -4,6 +4,14 @@ jQuery MultiSelect
 Improved jQuery MultiSelect that supports single select and multi select w stabil SelectAll feature
 original repo: https://github.com/nobleclem/jQuery-MultiSelect
 
+Additional npm developer tools (browser-sync, gh-pages)
+* Start live server `$ npm run serve`
+* Deploy `$ npm run deploy`
+
+## Demo
+
+https://zsim0n.github.io/jQuery-MultiSelect/demo.html
+
 ## Usage
 The Multiselect detect the 'mode' from the `multiple`attribute.
 ```
