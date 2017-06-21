@@ -23,6 +23,7 @@
   <form>
     <h3> Basic Select box - 3 Column setup and search</h3>
     <select name="default[]">
+        <option disabled selected value> -- select an option -- </option>
         <option value="AK">Alaska</option>
         <option value="AZ">Arizona</option>
         <option value="AR">Arkansas</option>
@@ -31,7 +32,7 @@
         <option value="CT">Connecticut</option>
         <option value="DE">Delaware</option>
         <option value="FL">Florida</option>
-        <option value="GA" selected="selected">Georgia</option>
+        <option value="GA">Georgia</option>
         <option value="HI">Hawaii</option>
         <option value="ID">Idaho</option>
         <option value="IL">Illinois</option>
@@ -160,9 +161,11 @@
   
   <script src="jquery.multiselect.js"></script>
   <script>
+  $('option').attr('checked',false);
     $(document).ready(function () {
       $('select').multiselect({
         columns: 3,
+        placeholder: 'blabla',
         search: true,
         selectAll: true,
         selectGroup: true

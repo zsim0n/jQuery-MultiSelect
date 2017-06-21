@@ -412,6 +412,7 @@
                         name      : $(this).text(),
                         value     : $(this).val(),
                         checked   : $(this).prop( 'selected' ),
+                        disabled  : $(this).prop( 'disabled' ),
                         attributes: thisOptionAtts
                     });
                 }
@@ -813,6 +814,10 @@
             // add user defined attributes
             if( option.hasOwnProperty('attributes') && Object.keys( option.attributes ).length ) {
                 thisCheckbox.attr( option.attributes );
+            }
+            if (option.disabled) {
+                container.addClass('hidden');
+                thisCheckbox.prop( 'disabled', true );
             }
             if( option.checked ) {
                 container.addClass('default selected');
