@@ -445,10 +445,10 @@
                         'selected', $(this).is(':checked')
                     ).closest('select').trigger('change');
 
-                    // USER CALLBACK
-                    if( typeof instance.options.onOptionClick == 'function' ) {
-                        instance.options.onOptionClick(instance.element, this);
-                    }
+                }
+                // USER CALLBACK
+                if( typeof instance.options.onOptionClick == 'function' ) {
+                    instance.options.onOptionClick(instance.element, this);
                 }
                 instance._updateSelectAllText();
                 instance._updatePlaceholderText();
